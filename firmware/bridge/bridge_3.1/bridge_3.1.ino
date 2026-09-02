@@ -1,18 +1,18 @@
 /*
- ============================================================================
+
  NODO BRIDGE - ESP32 #2
- CONTROLADOR DE RED IOT MESH Y GESTION DE ACTUADORES
- ============================================================================
+ CONTROLADOR DE RED IOT MESH Y CONTROL DE ACTUADORES
+
   
  ARQUITECTURA Y CARACTERISTICAS:
- - Topologia Hibrida: ESP-NOW (comunicacion de sensores) y UART (hacia Gateway).
- - Arranque Seguro: Estado inicial en OFFLINE hasta confirmacion de telemetria.
- - Monitorizacion Logica: Deteccion y reporte de perdida de conexion (Timeout 30s).
+ - Arquitectura Hibrida: ESP-NOW (comunicacion de sensores) y UART (hacia el Gateway).
+ - Arranque Seguro: Estado inicial en OFFLINE (desconectado) hasta confirmacion de telemetria.
+ - Monitorizacion Logica: Deteccion y reporte de perdida de conexion (Timeout 30s reinio seguro)
  - Auto-Recuperacion: Restauracion automatica de estado ante reconexiones.
- - Tolerancia a Fallos: Implementacion de Watchdog Timer (WDT) de hardware nativo.
+ - Tolerancia a Fallos: Implementacion de Watchdog Timer (perroguardian) (WDT) de hardware nativo.
  - Gestion de Memoria: Monitoreo continuo de heap RAM y reinicios preventivos.
- - Persistencia: Retencion de estado mediante RTC Memory y memoria Flash (Preferences).
- - Control Termico: Termostato integrado con histeresis con margen de tenperatura (+0.5 C).
+ - Persistencia: Retencion de estado mediante RTC Memory y memoria Flash (Preferences, recuerda el ultimo estado ante un reincio).
+ - Control Termico: Termostato integrado con margen de tenperatura ( mas 0.5 C).
  */
 
 
@@ -454,7 +454,7 @@ void setup() {
     prefs.end();
     Serial.printf("[MEMORIA] Parametro de termostato restaurado: %.1f C\n", tempActivacion);
 
-    // Deteccion de motivo de reinicio y restauracion desde memoria RTC (Warm Boot)
+    // Deteccion de motivo de reinicio y restauracion desde memoria RTC (Warm Boot persisetncai de varaibles para su funcionamiento)
     esp_reset_reason_t reason = esp_reset_reason();
     bool reinicioPorFallo = (reason == ESP_RST_SW || reason == ESP_RST_PANIC || reason == ESP_RST_INT_WDT || reason == ESP_RST_TASK_WDT || reason == ESP_RST_WDT);
 
@@ -535,7 +535,7 @@ void loop() {
     leerGateway();
     verificarEstadoSensores(); 
     
-    // Rutina de integridad y refuerzo de comandos UART
+    // Rutina de integridad y refuerzo de comandos UART (comunicacion por cable)
     if (millis() - lastReenvioEstado > INTERVALO_REENVIO_MS) {
         lastReenvioEstado = millis();
         
@@ -552,7 +552,7 @@ void loop() {
         }
     }
     
-    // Telemetria de diagnostico local
+    // Telemetria de diagnostico local (muestra el estado de la plca ESP32 bridge (puente))
     static unsigned long lastStatus = 0;
     if (millis() - lastStatus > 30000) {
         lastStatus = millis();
