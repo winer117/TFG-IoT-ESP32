@@ -82,8 +82,8 @@ const char* mqtt_subscribe_actuadores = "channels/0000000/subscribe";
 #include <ArduinoJson.h>
 
 // Credenciales del Asistente Virtual
-#define BOT_TOKEN "tu_token_de_telegram"
-#define CHAT_ID "tu_chat_id"
+#define BOT_TOKEN "token_de_telegram"
+#define CHAT_ID "chat_id"
 
 // Clientes de red seguros para API de Telegram
 WiFiClientSecure secured_client;
