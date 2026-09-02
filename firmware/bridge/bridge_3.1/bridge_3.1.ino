@@ -49,7 +49,7 @@ float tempActivacion = 18.0;
 #define UPTIME_MAX_MS 604800000UL      // Reinicio preventivo programado (7 dias)
 #define WDT_LOOP_TIMEOUT 30            // Timeout para el ciclo principal (30s)
 
-// Direcciones MAC de nodos origen (Modificar por las MAC reales del hardware)
+// Direcciones MAC para los nodos de sensores (ESP32) en la red ESP-NOW
 uint8_t sensorMAC[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00}; // MAC del ESP32 Ambiental (ESP 32 sensor)
 uint8_t sensorElectricoMAC[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00}; // MAC del ESP32 Electrico (ESP 32 sensor)
 
