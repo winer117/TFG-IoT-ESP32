@@ -1,0 +1,12 @@
+# Credenciales y configuraciones privadas
+.env
+
+# Archivos de datos descargados y generados
+raw_*.csv
+dataset_hogar_completo.csv
+
+# Modelo compilado para el ESP32 (se genera automáticamente en cada entrenamiento)
+model.tflite
+
+# Caché de Python
+__pycache__/
